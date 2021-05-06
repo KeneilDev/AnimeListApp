@@ -1,0 +1,50 @@
+﻿@model AnimeListApp.Models.UserAnimeList
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+<h4>UserAnimeList</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                <select asp-for="Status" class="form-control">
+                    <option value="0">Watching</option>
+                    <option value="1">Completed</option>
+                    <option value="2">On Hold</option>
+                    <option value="3">Dropped</option>
+                    <option value="4">PlanToWatch</option>
+                </select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label hidden asp-for="AppUserId" class="control-label"></label>
+                <input hidden asp-for="AppUserId" value="@UserManager.GetUserAsync(User).Result.Id" class="form-control">
+            </div>
+            <div class="form-group">
+                <label hidden asp-for="AnimeId" class="control-label"></label>
+                <input hidden asp-for="AnimeId" class="form-control" value="@ViewBag.AnimeId">
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<img src="@ViewBag.PictureURL" style="height:128px; width:95px;" />
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
