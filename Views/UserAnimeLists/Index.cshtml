@@ -1,0 +1,52 @@
+﻿@model IEnumerable<AnimeListApp.Models.UserAnimeList>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Your Anime List</h1>
+
+<p>
+    <a asp-controller="Animes" asp-action="Index">Add New Anime</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>      
+            <th>
+                @Html.DisplayNameFor(model => model.Anime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                <img src="@item.Anime.PictureURL" style="height:128px; width:95px;" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Anime.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+            <td>
+                <form class="form">
+                    <button type="submit" class="btn btn-info text-dark" asp-action="Details" asp-route-id="@item.Id"> <i class="fas fa-list"></i></button>
+                    <button type="submit" class="btn btn-success text-dark" asp-action="Edit" asp-route-id="@item.Id"> <i class="fas fa-edit"></i></button>
+                    <button type="submit" class="btn btn-danger text-dark" asp-action="Delete" asp-route-id="@item.Id"> <i class="far fa-trash-alt"></i></button>
+                </form>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
