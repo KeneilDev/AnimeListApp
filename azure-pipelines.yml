@@ -2,17 +2,6 @@
 trigger:
 - master
 
-# ASP.NET Core (.NET Framework)
-- task: AzureRmWebAppDeployment@4
-  inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Avanade Delivery(3eba6e29-3983-495b-a539-c3c4b43fb90c)'
-    appType: 'webAppLinux'
-    WebAppName: 'KeneilAnimeListApp'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/'
-    RuntimeStack: 'DOTNETCORE|5.0'
-
-
 pool:
   vmImage: 'windows-latest'
 
@@ -35,6 +24,16 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Avanade Delivery(3eba6e29-3983-495b-a539-c3c4b43fb90c)'
+    appType: 'webAppLinux'
+    WebAppName: 'KeneilAnimeListApp'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/'
+    RuntimeStack: 'DOTNETCORE|5.0'
+    ScriptType: 'Inline Script'
+    InlineScript: ':: You can provide your deployment commands here. One command per line.'
 - task: VSTest@2
   inputs:
     platform: '$(buildPlatform)'
