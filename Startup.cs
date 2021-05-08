@@ -1,5 +1,7 @@
 using AnimeListApp.Data;
+using AnimeListApp.Interfaces;
 using AnimeListApp.Models;
+using AnimeListApp.Models.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,7 +33,7 @@ namespace AnimeListApp
             services.AddRouting(r => r.LowercaseUrls = true);
 
             var myConnectionString = Configuration.GetConnectionString("DefaultConnection");
-
+            services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseMySql(myConnectionString, ServerVersion.AutoDetect(myConnectionString)));
             services.AddDatabaseDeveloperPageExceptionFilter();
@@ -43,7 +45,7 @@ namespace AnimeListApp
             .AddDefaultTokenProviders(); ;
             services.AddControllersWithViews();
             services.AddRazorPages();
-          //  services.AddSwaggerGen();
+            services.AddSwaggerGen();
             
             services.Configure<IdentityOptions>(options =>
             {
@@ -65,10 +67,11 @@ namespace AnimeListApp
                 app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();
                 //Swagger Implementation
-             //   app.UseSwaggerUI(c =>
-              //  {
-             //       c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-             //   });
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Animes");
+               });
 
             }
             else

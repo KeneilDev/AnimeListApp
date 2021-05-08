@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AnimeListApp.Data;
 using AnimeListApp.Models;
+using AnimeListApp.Models.Binding;
 
 namespace AnimeListApp.Controllers
 {
@@ -19,7 +20,7 @@ namespace AnimeListApp.Controllers
             _context = context;
         }
 
-        // GET: Animes
+        // GET: All Animes
         public IActionResult Index()
         {
             var allAnimes = _context.Anime.ToList();
@@ -44,16 +45,29 @@ namespace AnimeListApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,Description,PictureURL,Genre,CreatedAt")] Anime anime)
+        public IActionResult Create(AddAnimeBindingModel bindingModel)
         {
-            if (ModelState.IsValid)
+            var animeToCreate = new Anime
             {
-                _context.Add(anime);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(anime);
+                Name = bindingModel.Name,
+                Description = bindingModel.Description,
+                PictureURL = bindingModel.PictureURL,
+                Genre = bindingModel.Genre,
+                CreatedAt = bindingModel.CreatedAt
+            };
+            _context.Anime.Add(animeToCreate);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
         }
+
+            //if (ModelState.IsValid)
+            //{
+            //    _context.Add(anime);
+            //    await _context.SaveChangesAsync();
+            //    return RedirectToAction(nameof(Index));
+            //}
+            //return View(anime);
+        //}
 
         // GET: Animes/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -76,7 +90,7 @@ namespace AnimeListApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,PictureURL,Genre,CreatedAt")] Anime anime)
+        public IActionResult Edit(int id, Anime anime)
         {
             if (id != anime.Id)
             {
@@ -89,8 +103,18 @@ namespace AnimeListApp.Controllers
             {
                 try
                 {
-                    _context.Update(anime);
-                    await _context.SaveChangesAsync();
+                    var animeToUpdate = _context.Anime.FirstOrDefault(a => a.Id == id);
+
+                    animeToUpdate.Name = anime.Name;
+                    animeToUpdate.Description = anime.Description;
+                    animeToUpdate.PictureURL = anime.PictureURL;
+                    animeToUpdate.Genre = anime.Genre;
+                    animeToUpdate.CreatedAt = anime.CreatedAt;
+                    
+                    _context.SaveChanges();
+                    return RedirectToAction(nameof(Index));
+                    //_context.Update(anime);
+                    //await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -103,7 +127,6 @@ namespace AnimeListApp.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("Index");
             }
             return View(anime);
         }

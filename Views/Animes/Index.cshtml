@@ -12,68 +12,70 @@
 <p>
     <a asp-action="Create">Add New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Genre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedAt)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-        <tr>
-            <td>
-                <img src="@item.PictureURL" style="height:128px; width:95px;" />
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Genre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedAt)
-            </td>
-            <td>
-            @if (SignInManager.IsSignedIn(User))
-             {
-                <td>
-                    <form class="form">
-                        <button type="submit" class="btn btn-info text-dark" asp-action="Details" asp-route-id="@item.Id"> <i class="fas fa-list"></i></button>
-                        <button type="submit" class="btn btn-success text-dark" asp-action="Edit" asp-route-id="@item.Id"> <i class="fas fa-edit"></i></button>
-                        <button type="submit" class="btn btn-danger text-dark" asp-action="Delete" asp-route-id="@item.Id"> <i class="far fa-trash-alt"></i></button>
-                        <button type="submit" class="btn btn-warning text-dark" asp-controller="UserAnimeLists" asp-action="Create" asp-route-id="@item.Id"> <i class="fas fa-plus"></i></button>
-                    </form>
-                </td>
-            }
-            else
-            {
-                <td>
-                    <form class="form">
-                        <button type="submit" class="btn btn-info text-dark" asp-action="Details" asp-route-id="@item.Id"> <i class="fas fa-list"></i></button>
-                        <button type="submit" class="btn btn-success text-dark" asp-action="Edit" asp-route-id="@item.Id"> <i class="fas fa-edit"></i></button>
-                        <button type="submit" class="btn btn-danger text-dark" asp-action="Delete" asp-route-id="@item.Id"> <i class="far fa-trash-alt"></i></button>
-                    </form>
-                </td>
-            }
+<div class="table-responsive-sm">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Genre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreatedAt)
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <img src="@item.PictureURL" style="height:128px; width:95px;" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Genre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedAt)
+                    </td>
+                    <td>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                        <td>
+                            <form class="form">
+                                <button type="submit" class="btn btn-info text-dark" asp-action="Details" asp-route-id="@item.Id"> <i class="fas fa-list"></i></button>
+                                <button type="submit" class="btn btn-success text-dark" asp-action="Edit" asp-route-id="@item.Id"> <i class="fas fa-edit"></i></button>
+                                <button type="submit" class="btn btn-danger text-dark" asp-action="Delete" asp-route-id="@item.Id"> <i class="fas fa-trash-alt"></i></button>
+                                <button type="submit" class="btn btn-warning text-dark" asp-controller="UserAnimeLists" asp-action="Create" asp-route-id="@item.Id"> <i class="fas fa-plus"></i></button>
+                            </form>
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <form class="form">
+                                <button type="submit" class="btn btn-info text-dark" asp-action="Details" asp-route-id="@item.Id"> <i class="fas fa-list"></i></button>
+                                <button type="submit" class="btn btn-success text-dark" asp-action="Edit" asp-route-id="@item.Id"> <i class="fas fa-edit"></i></button>
+                                <button type="submit" class="btn btn-danger text-dark" asp-action="Delete" asp-route-id="@item.Id"> <i class="far fa-trash-alt"></i></button>
+                            </form>
+                        </td>
+                    }
+                    </tr>
+                }
+        </tbody>
+    </table>
+    </div>
