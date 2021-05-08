@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AnimeListApp.Models.Binding
 {
-    class AddAnimeBindingModel
+    public class AddAnimeBindingModel
     {
         public string Name { get; set; }
         public string Description { get; set; }
