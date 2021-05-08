@@ -41,7 +41,7 @@ stages:
     jobs:
       - job: release
         pool:
-              name: anime-app
+              name: 'anime-app'
         steps:
         - task: DownloadBuildArtifacts@0
           inputs:
