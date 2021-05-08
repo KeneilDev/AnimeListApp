@@ -49,7 +49,7 @@ stages:
             downloadType: 'specific'
             itemPattern: '**/*.zip'
             downloadPath: '$(System.ArtifactsDirectory)'
-            
+
         - task: AzureRmWebAppDeployment@4
           inputs:
               ConnectionType: 'AzureRM'
@@ -61,3 +61,11 @@ stages:
         - task: DockerInstaller@0
           inputs:
             dockerVersion: '17.09.0-ce'
+
+        - task: AzureWebApp@1
+          inputs:
+            azureSubscription: 'Avanade Delivery(3eba6e29-3983-495b-a539-c3c4b43fb90c)'
+            appType: 'webAppLinux'
+            appName: 'KeneilAnimeListApp'
+            package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+            runtimeStack: 'DOTNETCORE|5.0'
