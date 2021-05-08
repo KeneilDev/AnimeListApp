@@ -1,40 +1,82 @@
-
 trigger:
 - master
 
-pool:
-  vmImage: 'windows-latest'
+stages:
+  - stage: build
+    displayName: 'master-branch-build'
 
-variables:
-  solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
+    #build jobs
+    jobs: 
+      - job: build
+        pool:
+          vmImage: 'ubuntu-latest'
 
-steps:
-- task: NuGetToolInstaller@1
+        variables:
+          buildConfiguration: 'Release'
 
-- task: NuGetCommand@2
-  inputs:
-    restoreSolution: '$(solution)'
+        steps:
+        - task: DotNetCoreCLI@2
+          inputs:
+            command: 'restore'
+            projects: '**/*.csproj'
+            feedsToUse: 'select'
+        - task: DotNetCoreCLI@2
+          inputs:
+            command: 'build'
+            projects: '**/*.csproj'
+            arguments: '--configuration $(BuildConfiguration)'
+        - task: DotNetCoreCLI@2
+          inputs:
+            command: 'publish'
+            publishWebProjects: true
+            arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
+        - task: PublishBuildArtifacts@1
+          inputs:
+            PathtoPublish: '$(build.artifactstagingdirectory)'
+            ArtifactName: 'drop'
+            publishLocation: 'Container'
+  - stage: release
+    displayName: 'deployment-release'
+#release job
+    jobs:
+      - job: release
+        pool:
+              name: dotnet-app-pool
+        steps:
+        - task: DownloadBuildArtifacts@0
+          inputs:
+            buildType: 'current'
+            downloadType: 'specific'
+            itemPattern: '**/*.zip'
+            downloadPath: '$(System.ArtifactsDirectory)'
+            
+        - task: AzureRmWebAppDeployment@4
+          inputs:
+              ConnectionType: 'AzureRM'
+              azureSubscription: 'Avanade Delivery(3eba6e29-3983-495b-a539-c3c4b43fb90c)'
+              appType: 'webAppLinux'
+              WebAppName: 'KeneilAnimeListApp'
+              packageForLinux: '$(System.DefaultWorkingDirectory)/'
+              RuntimeStack: 'DOTNETCORE|5.0'
+        - task: DockerInstaller@0
+          inputs:
+            dockerVersion: '17.09.0-ce'
 
-- task: VSBuild@1
-  inputs:
-    solution: '$(solution)'
-    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+        - task: Docker@2
+          inputs:
+            repository: 'myWebApp'
+            command: 'build'
+            Dockerfile: '**/Dockerfile'
+            tags: 'latest'
 
-- task: AzureRmWebAppDeployment@4
-  inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Avanade Delivery(3eba6e29-3983-495b-a539-c3c4b43fb90c)'
-    appType: 'webAppLinux'
-    WebAppName: 'KeneilAnimeListApp'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/'
-    RuntimeStack: 'DOTNETCORE|5.0'
-    ScriptType: 'Inline Script'
-    InlineScript: ':: You can provide your deployment commands here. One command per line.'
-- task: VSTest@2
-  inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+        - task: SSH@0
+          inputs:
+            sshEndpoint: 'build-agent-vm'
+            runOptions: 'inline'
+            inline: |
+              if [ "$(docker ps -a | grep myWebApp)" ]
+              then
+                  docker rm -f mywebapp
+              fi
+              docker run -d -p 80:80 --name mywebapp mywebapp:latest
+            readyTimeout: '20000'
