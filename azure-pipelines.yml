@@ -9,7 +9,7 @@ stages:
     jobs: 
       - job: build
         pool:
-          name: anime-app
+          name: Azure Pipelines
 
         variables:
           buildConfiguration: 'Release'
@@ -41,7 +41,7 @@ stages:
     jobs:
       - job: release
         pool:
-              name: anime-app
+              name: Azure Pipelines
         steps:
         - task: DownloadBuildArtifacts@0
           inputs:
