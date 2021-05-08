@@ -8,29 +8,34 @@ using Microsoft.EntityFrameworkCore;
 using AnimeListApp.Data;
 using AnimeListApp.Models;
 using AnimeListApp.Models.Binding;
+using AnimeListApp.Interfaces;
 
 namespace AnimeListApp.Controllers
 {
     public class AnimesController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        //private readonly ApplicationDbContext _context;
+        private IRepositoryWrapper _repo;
 
-        public AnimesController(ApplicationDbContext context)
+
+        public AnimesController(IRepositoryWrapper repo)
         {
-            _context = context;
+            _repo = repo;
         }
 
         // GET: All Animes
         public IActionResult Index()
         {
-            var allAnimes = _context.Anime.ToList();
+            var allAnimes = _repo.Anime.FindAll();
             return View(allAnimes);
         }
 
         // GET: Animes/Details/5
         public IActionResult Details(int id)
         {
-            var animeById = _context.Anime.FirstOrDefault(c => c.Id == id);
+            //return View(_repo.Lists.FindByCondition(c => c.ID == id).FirstOrDefault());
+
+            var animeById = _repo.Anime.FindbyCondition(c => c.Id == id).FirstOrDefault();
             return View(animeById);
         }
 
@@ -45,18 +50,18 @@ namespace AnimeListApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(AddAnimeBindingModel bindingModel)
+        public IActionResult Create(Anime anime)
         {
             var animeToCreate = new Anime
             {
-                Name = bindingModel.Name,
-                Description = bindingModel.Description,
-                PictureURL = bindingModel.PictureURL,
-                Genre = bindingModel.Genre,
-                CreatedAt = bindingModel.CreatedAt
+                Name = anime.Name,
+                Description = anime.Description,
+                PictureURL = anime.PictureURL,
+                Genre = anime.Genre,
+                CreatedAt = anime.CreatedAt
             };
-            _context.Anime.Add(animeToCreate);
-            _context.SaveChanges();
+            _repo.Anime.Create(animeToCreate);
+            _repo.Save();
             return RedirectToAction(nameof(Index));
         }
 
@@ -70,14 +75,10 @@ namespace AnimeListApp.Controllers
         //}
 
         // GET: Animes/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public  IActionResult Edit(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var anime = await _context.Anime.FindAsync(id);
+            var anime = _repo.Anime.FindbyCondition(a => a.Id == id).FirstOrDefault();
             if (anime == null)
             {
                 return NotFound();
@@ -98,49 +99,34 @@ namespace AnimeListApp.Controllers
 
                 //return NotFound();
             }
+           
+            var animeToUpdate = _repo.Anime.FindbyCondition(a => a.Id == id).FirstOrDefault();
 
-            if (ModelState.IsValid)
+            if (animeToUpdate != null)
             {
-                try
-                {
-                    var animeToUpdate = _context.Anime.FirstOrDefault(a => a.Id == id);
-
-                    animeToUpdate.Name = anime.Name;
-                    animeToUpdate.Description = anime.Description;
-                    animeToUpdate.PictureURL = anime.PictureURL;
-                    animeToUpdate.Genre = anime.Genre;
-                    animeToUpdate.CreatedAt = anime.CreatedAt;
-                    
-                    _context.SaveChanges();
-                    return RedirectToAction(nameof(Index));
-                    //_context.Update(anime);
-                    //await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!AnimeExists(anime.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                animeToUpdate.Name = anime.Name;
+                animeToUpdate.Description = anime.Description;
+                animeToUpdate.PictureURL = anime.PictureURL;
+                animeToUpdate.Genre = anime.Genre;
+                animeToUpdate.CreatedAt = anime.CreatedAt;
             }
-            return View(anime);
+                _repo.Anime.Update(animeToUpdate);
+                _repo.Save();
+                return RedirectToAction("Index");
+                //_context.Update(anime);
+                //await _context.SaveChangesAsync();
+                                
         }
 
         // GET: Animes/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public  IActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var anime = await _context.Anime
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var anime =  _repo.Anime.FindbyCondition(m => m.Id == id).FirstOrDefault();
             if (anime == null)
             {
                 return NotFound();
@@ -152,17 +138,12 @@ namespace AnimeListApp.Controllers
         // POST: Animes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public  IActionResult DeleteConfirmed(int id)
         {
-            var anime = await _context.Anime.FindAsync(id);
-            _context.Anime.Remove(anime);
-            await _context.SaveChangesAsync();
+            var anime = _repo.Anime.FindbyCondition(a => a.Id == id).FirstOrDefault();
+            _repo.Anime.Delete(anime);
+            _repo.Save();
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool AnimeExists(int id)
-        {
-            return _context.Anime.Any(e => e.Id == id);
         }
     }
 }
