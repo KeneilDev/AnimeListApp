@@ -1,3 +1,7 @@
+
+trigger:
+- master
+
 # ASP.NET Core (.NET Framework)
 - task: AzureRmWebAppDeployment@4
   inputs:
@@ -7,13 +11,7 @@
     WebAppName: 'KeneilAnimeListApp'
     packageForLinux: '$(System.DefaultWorkingDirectory)/'
     RuntimeStack: 'DOTNETCORE|5.0'
-# Build and test ASP.NET Core projects targeting the full .NET Framework.
-# Add steps that publish symbols, save build artifacts, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
-
-trigger:
-- master
 
 pool:
   vmImage: 'windows-latest'
