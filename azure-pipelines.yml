@@ -61,22 +61,3 @@ stages:
         - task: DockerInstaller@0
           inputs:
             dockerVersion: '17.09.0-ce'
-
-        - task: Docker@2
-          inputs:
-            repository: 'myWebApp'
-            command: 'build'
-            Dockerfile: '**/Dockerfile'
-            tags: 'latest'
-
-        - task: SSH@0
-          inputs:
-            sshEndpoint: 'build-agent-vm'
-            runOptions: 'inline'
-            inline: |
-              if [ "$(docker ps -a | grep myWebApp)" ]
-              then
-                  docker rm -f mywebapp
-              fi
-              docker run -d -p 80:80 --name mywebapp mywebapp:latest
-            readyTimeout: '20000'
