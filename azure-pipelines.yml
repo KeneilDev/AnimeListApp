@@ -9,7 +9,7 @@ stages:
     jobs: 
       - job: build
         pool:
-          name: :anime-app
+          name: anime-app
 
         variables:
           buildConfiguration: 'Release'
@@ -41,7 +41,7 @@ stages:
     jobs:
       - job: release
         pool:
-              name: dotnet-app-pool
+              name: anime-pool
         steps:
         - task: DownloadBuildArtifacts@0
           inputs:
