@@ -63,7 +63,7 @@ stages:
 
         - task: SSH@0
           inputs:
-            sshEndpoint: 'build-agent-vm'
+            sshEndpoint: 'anime-app-service'
             runOptions: 'inline'
             inline: |
               if [ "$(docker ps -a | grep myWebApp)" ]
