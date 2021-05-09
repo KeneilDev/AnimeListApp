@@ -43,18 +43,13 @@ stages:
         pool:
               name: anime-app
         steps:
-        - task: DownloadBuildArtifacts@0
+        - task: AzureWebApp@1
           inputs:
-            buildType: 'current'
-            downloadType: 'specific'
-            itemPattern: '**/*.zip'
-            downloadPath: '$(System.ArtifactsDirectory)'
-
-        - task: AzureRmWebAppDeployment@4
-          inputs:
-            ConnectionType: 'AzureRM'
-            azureSubscription: 'Avanade Delivery(4)(3eba6e29-3983-495b-a539-c3c4b43fb90c)'
+            azureSubscription: 'Avanade Delivery(6)(3eba6e29-3983-495b-a539-c3c4b43fb90c)'
             appType: 'webAppLinux'
-            WebAppName: 'KeneilAnimeApp'
-            packageForLinux: '$(System.DefaultWorkingDirectory)/'
-            RuntimeStack: 'DOTNETCORE|5.0'
+            appName: 'KeneilAnimeApp'
+            deployToSlotOrASE: true
+            resourceGroupName: 'KeneilDaGOAT'
+            slotName: 'production'
+            package: '$(System.DefaultWorkingDirectory)/'
+            runtimeStack: 'DOTNETCORE|5.0'
