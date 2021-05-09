@@ -50,16 +50,13 @@ stages:
             itemPattern: '**/*.zip'
             downloadPath: '$(System.ArtifactsDirectory)'
 
-        - task: DockerInstaller@0
+        - task: AzureWebApp@1
           inputs:
-            dockerVersion: '17.09.0-ce'
-
-        - task: Docker@2
-          inputs:
-            repository: 'myWebApp'
-            command: 'build'
-            Dockerfile: '**/Dockerfile'
-            tags: 'latest'
+            azureSubscription: 'Avanade Delivery(3)(3eba6e29-3983-495b-a539-c3c4b43fb90c)'
+            appType: 'webAppLinux'
+            appName: 'KeneilAnimeApp'
+            package: '$(System.DefaultWorkingDirectory)/'
+            runtimeStack: 'DOTNETCORE|5.0'
 
         - task: SSH@0
           inputs:
