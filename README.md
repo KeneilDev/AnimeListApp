@@ -1,12 +1,30 @@
 # AnimeListApp
-QA CRUD Application Project or Keneil Jordan
+**QA CRUD Application Project or Keneil Jordan :tw-1f310:
+**
 
-**AnimeListApp**
+
+
 
 **Contents**
 
-**Brief**
+1. [ Brief. ](#brief)
+2. [ Architecture. ](#Architecture)
+3. [ Project Tracking. ](#projecttracking)
+4. [ Risk Assessment. ](#riskassessment)
+5. [ Testing. ](#testing)
+6. [ Front-End Design. ](#frontenddesign)
+7. [ Known Issues. ](#knownissues)
+8. [ Future Improvements. ](#futureimprovements)
+9. [ Authors. ](#authors)
 
+
+
+
+
+
+
+<a name="brief"></a>
+## 1. Brief
 For this brief I have been asked to create a CRUD application with the utilisation of supporting tools,
  methodologies and technologies that encapsulate all core modules
  covered during training.
@@ -33,7 +51,7 @@ In addition to the requirements set out in the brief, I am also required to incl
  Feature-Branch model which will subsequently be built through a CI
  server and deployed to a cloud-based virtual machine.
 
-**My Approach**
+##**My Approach**
 
 To meet the requirements of the brief, I have produced a MVC Web application using the .NET Framework Core that that must allow the user to do the following:
 
@@ -56,7 +74,8 @@ Additionally, I would like to allow the user to:
 - Add an individual anime to their list
 - Change the current status of the anime they are watching
 
-**Architecture**
+<a name="Architecture"></a>
+##**Architecture**
 
 **Database Structure**
 
@@ -78,7 +97,8 @@ In the ERD&#39;s shown above, the user\_anime table has a one-to-many relationsh
 
 The picture above shows the structure of my CI Pipeline. It works from using my local machine and push the code to GitHub which is linked to my azure pipeline. In my Azure pipeline it is linked to my azure web service and the building agent that is set up on my Virtual Machine in azure. Once the pipeline script is ran, it pushes the repository to the web app that was created on azure and an updated app should show on my hosted website.
 
-**Project Tracking**
+<a name="projecttracking"></a>
+##**Project Tracking**
 
 Trello was used to track the progress of the project (pictured below). You can find the link to this board here: [QA Crud Application | Trello](https://trello.com/b/HARAm46v/qa-crud-application)
 
@@ -94,13 +114,16 @@ The board has been designed and structured to move from left to right from of th
 - _Testing:_ once a feature has been implemented it goes onto the testing stage
 - _Finished_ : this section contains the features that have passed the testing stage and made it to production
 
-**Risk Assessment**
+<a name="riskassessment"></a>
+##**Risk Assessment**
 
 The risk assessment matrix for this project can be found below in the screenshot :
 
 ![](RackMultipart20210509-4-od2cfg_html_71b834dc18f2d194.png)
 
-**Testing**
+
+<a name="testing"></a>
+##**Testing**
 
 Only one of the controllers for this application was tested using xUnit testing alongside with a code coverage report addon. The controller test included Repository patterns, Moq implementation to mock the controller behaviour.
 
@@ -112,7 +135,9 @@ Here&#39;s another screenshot showing the coverage report for the AnimesControll
 
 ![](RackMultipart20210509-4-od2cfg_html_8a365da7e9739a84.png)
 
-**Front-End Design**
+
+<a name="frontenddesign"></a>
+##**Front-End Design**
 
 When the web app is first launched the user will be brought to this home page:
 
@@ -132,13 +157,15 @@ If the user decides to navigate to the &#39;Anime Library&#39; page, they can cr
 
 ![](RackMultipart20210509-4-od2cfg_html_1743a574486bd0a4.png)
 
-**Known Issues**
+<a name="knownissues"></a>
+##**Known Issues**
 
 There is only one known issue that I am aware of in the current application which is:
 
 - When a user tries to add an anime to their list that already exists, it doesn&#39;t update the previous value
 
-**Future Improvements**
+<a name="futureimprovements"></a>
+##**Future Improvements**
 
 For future improvements outside of my existing bugs I would like to:
 
@@ -148,6 +175,8 @@ For future improvements outside of my existing bugs I would like to:
 - Add a review system to anime that multiple users can alter by leaving a review
 - Implement Angular
 
-**Authors**
+
+<a name="authors"></a>
+##**Authors**
 
 Keneil Jordan
