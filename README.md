@@ -1,6 +1,6 @@
 # AnimeListApp
-**QA CRUD Application Project or Keneil Jordan :tw-1f310:
-**
+## QA CRUD Application Project 🌐
+
 
 
 
@@ -51,7 +51,7 @@ In addition to the requirements set out in the brief, I am also required to incl
  Feature-Branch model which will subsequently be built through a CI
  server and deployed to a cloud-based virtual machine.
 
-##**My Approach**
+## 2. My Approach
 
 To meet the requirements of the brief, I have produced a MVC Web application using the .NET Framework Core that that must allow the user to do the following:
 
@@ -75,7 +75,7 @@ Additionally, I would like to allow the user to:
 - Change the current status of the anime they are watching
 
 <a name="Architecture"></a>
-##**Architecture**
+## 3. Architecture
 
 **Database Structure**
 
@@ -116,7 +116,7 @@ The board has been designed and structured to move from left to right from of th
 - _Finished_ : this section contains the features that have passed the testing stage and made it to production
 
 <a name="riskassessment"></a>
-##**Risk Assessment**
+## 4. Risk Assessment
 
 The risk assessment matrix for this project can be found below in the screenshot :
 
@@ -124,7 +124,7 @@ The risk assessment matrix for this project can be found below in the screenshot
 
 
 <a name="testing"></a>
-##**Testing**
+## 4. Testing
 
 Only one of the controllers for this application was tested using xUnit testing alongside with a code coverage report addon. The controller test included Repository patterns, Moq implementation to mock the controller behaviour.
 
@@ -138,7 +138,7 @@ Here&#39;s another screenshot showing the coverage report for the AnimesControll
 
 
 <a name="frontenddesign"></a>
-##**Front-End Design**
+## 5. Front-End Design
 
 When the web app is first launched the user will be brought to this home page:
 
@@ -159,14 +159,14 @@ If the user decides to navigate to the &#39;Anime Library&#39; page, they can cr
 ![Alt text](/ReadmeImages/image023.png "User List")
 
 <a name="knownissues"></a>
-##**Known Issues**
+## 6. Known Issues
 
 There is only one known issue that I am aware of in the current application which is:
 
 - When a user tries to add an anime to their list that already exists, it doesn&#39;t update the previous value
 
 <a name="futureimprovements"></a>
-##**Future Improvements**
+## 7. Future Improvements
 
 For future improvements outside of my existing bugs I would like to:
 
@@ -178,6 +178,6 @@ For future improvements outside of my existing bugs I would like to:
 
 
 <a name="authors"></a>
-##**Authors**
+## 8. Authors
 
 Keneil Jordan
