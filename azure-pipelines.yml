@@ -50,10 +50,11 @@ stages:
             itemPattern: '**/*.zip'
             downloadPath: '$(System.ArtifactsDirectory)'
 
-        - task: AzureWebApp@1
+        - task: AzureRmWebAppDeployment@4
           inputs:
-            azureSubscription: 'Avanade Delivery(3)(3eba6e29-3983-495b-a539-c3c4b43fb90c)'
+            ConnectionType: 'AzureRM'
+            azureSubscription: 'Avanade Delivery(4)(3eba6e29-3983-495b-a539-c3c4b43fb90c)'
             appType: 'webAppLinux'
-            appName: 'KeneilAnimeApp'
-            package: '$(System.DefaultWorkingDirectory)/'
-            runtimeStack: 'DOTNETCORE|5.0'
+            WebAppName: 'KeneilAnimeApp'
+            packageForLinux: '$(System.DefaultWorkingDirectory)/'
+            RuntimeStack: 'DOTNETCORE|5.0'
