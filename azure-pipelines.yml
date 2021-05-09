@@ -50,22 +50,25 @@ stages:
             itemPattern: '**/*.zip'
             downloadPath: '$(System.ArtifactsDirectory)'
 
-        - task: AzureRmWebAppDeployment@4
-          inputs:
-              ConnectionType: 'AzureRM'
-              azureSubscription: 'Avanade Delivery(3eba6e29-3983-495b-a539-c3c4b43fb90c)'
-              appType: 'webAppLinux'
-              WebAppName: 'KeneilAnimeListApp'
-              packageForLinux: '$(System.DefaultWorkingDirectory)/'
-              RuntimeStack: 'DOTNETCORE|5.0'
         - task: DockerInstaller@0
           inputs:
             dockerVersion: '17.09.0-ce'
 
-        - task: AzureWebApp@1
+        - task: Docker@2
           inputs:
-            azureSubscription: 'Avanade Delivery(3eba6e29-3983-495b-a539-c3c4b43fb90c)'
-            appType: 'webAppLinux'
-            appName: 'KeneilAnimeListApp'
-            package: '$(System.DefaultWorkingDirectory)/'
-            runtimeStack: 'DOTNETCORE|5.0'
+            repository: 'myWebApp'
+            command: 'build'
+            Dockerfile: '**/Dockerfile'
+            tags: 'latest'
+
+        - task: SSH@0
+          inputs:
+            sshEndpoint: 'build-agent-vm'
+            runOptions: 'inline'
+            inline: |
+              if [ "$(docker ps -a | grep myWebApp)" ]
+              then
+                  docker rm -f mywebapp
+              fi
+              docker run -d -p 80:80 --name mywebapp mywebapp:latest
+            readyTimeout: '20000'
