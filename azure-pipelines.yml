@@ -45,11 +45,8 @@ stages:
         steps:
         - task: AzureWebApp@1
           inputs:
-            azureSubscription: 'Avanade Delivery(6)(3eba6e29-3983-495b-a539-c3c4b43fb90c)'
+            azureSubscription: 'Avanade Delivery(1)(3eba6e29-3983-495b-a539-c3c4b43fb90c)'
             appType: 'webAppLinux'
             appName: 'KeneilAnimeApp'
-            deployToSlotOrASE: true
-            resourceGroupName: 'KeneilDaGOAT'
-            slotName: 'production'
             package: '$(System.DefaultWorkingDirectory)/'
             runtimeStack: 'DOTNETCORE|5.0'
