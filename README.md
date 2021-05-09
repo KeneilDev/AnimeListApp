@@ -83,17 +83,18 @@ Pictured below is an entity relationship diagram (ERD) showing the structure of 
 
 OLD:
 
-![](RackMultipart20210509-4-od2cfg_html_96db6118cb7ba93d.png)
+![Alt text](/ReadmeImages/image001.png "Old ERD")
+
 
 NEW:
 
-![](RackMultipart20210509-4-od2cfg_html_a8bd2428c7f7790d.png)
+![Alt text](/ReadmeImages/image003.png "New ERD")
 
 In the ERD&#39;s shown above, the user\_anime table has a one-to-many relationship between the users and anime table. This allows multiple users to have the same anime in their list and each will have a separate status as seen in the remodelled version of the ERD. Another change that was made to the newer ERD was the implementation of a &quot;CreatedAt&quot; attribute.
 
 **CI Pipeline**
 
-![](RackMultipart20210509-4-od2cfg_html_958f5f4de3d98314.png)
+![Alt text](/ReadmeImages/image005.png "Pipeline")
 
 The picture above shows the structure of my CI Pipeline. It works from using my local machine and push the code to GitHub which is linked to my azure pipeline. In my Azure pipeline it is linked to my azure web service and the building agent that is set up on my Virtual Machine in azure. Once the pipeline script is ran, it pushes the repository to the web app that was created on azure and an updated app should show on my hosted website.
 
@@ -102,7 +103,7 @@ The picture above shows the structure of my CI Pipeline. It works from using my 
 
 Trello was used to track the progress of the project (pictured below). You can find the link to this board here: [QA Crud Application | Trello](https://trello.com/b/HARAm46v/qa-crud-application)
 
-![](RackMultipart20210509-4-od2cfg_html_3427a297e6abbb61.png)
+![Alt text](/ReadmeImages/image007.png "Trello Board")
 
 The board has been designed and structured to move from left to right from of the project implementation. The summary of each card is stated below
 
@@ -119,7 +120,7 @@ The board has been designed and structured to move from left to right from of th
 
 The risk assessment matrix for this project can be found below in the screenshot :
 
-![](RackMultipart20210509-4-od2cfg_html_71b834dc18f2d194.png)
+![Alt text](/ReadmeImages/image009.png "Risk ssessment")
 
 
 <a name="testing"></a>
@@ -129,11 +130,11 @@ Only one of the controllers for this application was tested using xUnit testing 
 
 Below is a screenshot of the coverage report :
 
-![](RackMultipart20210509-4-od2cfg_html_e40665f55f87e2d.png)
+![Alt text](/ReadmeImages/image011.png "Test Coverage 1")
 
 Here&#39;s another screenshot showing the coverage report for the AnimesController of 72%:
 
-![](RackMultipart20210509-4-od2cfg_html_8a365da7e9739a84.png)
+![Alt text](/ReadmeImages/image013.png "Test Coverage 2")
 
 
 <a name="frontenddesign"></a>
@@ -141,21 +142,21 @@ Here&#39;s another screenshot showing the coverage report for the AnimesControll
 
 When the web app is first launched the user will be brought to this home page:
 
-![](RackMultipart20210509-4-od2cfg_html_75cf0aa224c596.png)
+![Alt text](/ReadmeImages/image015.png "Home")
 
 The User will now be able to login or register
 
-![](RackMultipart20210509-4-od2cfg_html_e7ae902fd730f2d9.png)
+![Alt text](/ReadmeImages/image017.png "Register")
 
-![](RackMultipart20210509-4-od2cfg_html_668ed44465395fc2.png)
+![Alt text](/ReadmeImages/image019.png "Login")
 
 Once they are logged in, they gain access to the &#39;Anime Library&#39; page and their account page:
 
-![](RackMultipart20210509-4-od2cfg_html_948ff5b4d9905be.png)
+![Alt text](/ReadmeImages/image021.png "Library")
 
 If the user decides to navigate to the &#39;Anime Library&#39; page, they can create a new anime or add it to their library if it doesn&#39;t already exist in their list :
 
-![](RackMultipart20210509-4-od2cfg_html_1743a574486bd0a4.png)
+![Alt text](/ReadmeImages/image023.png "User List")
 
 <a name="knownissues"></a>
 ##**Known Issues**
